@@ -66,11 +66,6 @@ class Book:
         if not author or not isinstance(author, str) or not author.strip():
             raise BookValidationError("Author must be a non-empty string")
     
-    def _validate_author(self, author: str) -> None:
-        """Validate author parameter only."""
-        if not author or not isinstance(author, str) or not author.strip():
-            raise BookValidationError("Author must be a non-empty string")
-    
     @property
     def title(self) -> str:
         """Get the book title."""
@@ -237,12 +232,12 @@ class Library:
         _books (List[Book]): Private list to store book instances
     """
     
-    def __init__(self, library_name: str) -> None:
+    def __init__(self, library_name: str = "My Library") -> None:
         """
         Initialize a Library instance.
         
         Args:
-            library_name: The name of the library
+            library_name: The name of the library (optional, defaults to "My Library")
             
         Raises:
             BookValidationError: If library_name is invalid
@@ -300,6 +295,13 @@ class Library:
         self._books.append(book)
         logger.info(f"Added book to {self.library_name}: {book.title}")
     
+    def _validate_title_author(self, title: str, author: str) -> None:
+        """Validate title and author parameters."""
+        if not title or not isinstance(title, str) or not title.strip():
+            raise BookValidationError("Title must be a non-empty string")
+        if not author or not isinstance(author, str) or not author.strip():
+            raise BookValidationError("Author must be a non-empty string")
+    
     def _validate_author(self, author: str) -> None:
         """Validate author parameter only."""
         if not author or not isinstance(author, str) or not author.strip():
@@ -328,18 +330,6 @@ class Library:
                 return True
         
         raise BookValidationError(f"Book '{title}' by {author} not found in the library")
-    
-    def _validate_title_author(self, title: str, author: str) -> None:
-        """Validate title and author parameters."""
-        if not title or not isinstance(title, str) or not title.strip():
-            raise BookValidationError("Title must be a non-empty string")
-        if not author or not isinstance(author, str) or not author.strip():
-            raise BookValidationError("Author must be a non-empty string")
-    
-    def _validate_author(self, author: str) -> None:
-        """Validate author parameter only."""
-        if not author or not isinstance(author, str) or not author.strip():
-            raise BookValidationError("Author must be a non-empty string")
     
     def search_books(self, query: str) -> List[Book]:
         """
