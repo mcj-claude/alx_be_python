@@ -249,6 +249,7 @@ class Library:
         """
         self._validate_library_name(library_name)
         self._library_name = library_name.strip()
+        self.books = []
         self._books: List[Book] = []
         logger.info(f"Created Library: {self.library_name}")
     
@@ -267,6 +268,16 @@ class Library:
         """Set the library name with validation."""
         self._validate_library_name(name)
         self._library_name = name.strip()
+    
+    @property
+    def books(self) -> List[Book]:
+        """Get the list of books."""
+        return self._books
+    
+    @books.setter
+    def books(self, books_list: List[Book]) -> None:
+        """Set the list of books."""
+        self._books = books_list
     
     def add_book(self, book: Book) -> None:
         """
